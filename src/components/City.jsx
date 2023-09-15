@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useParams, useSearchParams } from "react-router-dom";
+
 import styles from "./City.module.css";
 
 const formatDate = (date) =>
@@ -9,6 +12,15 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function City() {
+  const { id } = useParams();
+  console.log(id);
+
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const lat = searchParams.get("lat");
+  const lng = searchParams.get("lng");
+
   // TEMP DATA
   const currentCity = {
     cityName: "Lisbon",
@@ -50,7 +62,17 @@ function City() {
           Check out {cityName} on Wikipedia &rarr;
         </a>
       </div>
-
+      <p>
+        Position: {lat}
+        {lng}
+      </p>
+      <button
+        onClick={() => {
+          setSearchParams({ lat: 23, lng: 50 });
+        }}
+      >
+        Change position
+      </button>
       <div>{/* <ButtonBack /> */}</div>
     </div>
   );
